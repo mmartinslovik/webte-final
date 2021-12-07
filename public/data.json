@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "title": "Volkswagen",
+        "src": "vw_logo.png"
+    },
+    {
+        "id": 2,
+        "title": "Tesla",
+        "src": "tesla_logo.png"
+    }
+]
