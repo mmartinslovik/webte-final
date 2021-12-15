@@ -15,10 +15,22 @@ function LogoList(props) {
     const iterLogo = logos[props.iter]
     console.log(iterLogo)
 
+    const [iter, setIter] = useState(0)
+
+    const increaseIter = () => {
+        setIter(iter + 1)
+    }
+
+    useEffect(() => {
+        increaseIter()
+    }, [])
+
+    console.log(iter)
+
     return (
         <div>
             {iterLogo && (<Logo logo={iterLogo} />)}
-            {iterLogo && <CharList logoName={iterLogo.title} />}
+            {iterLogo && <CharList logoName={iterLogo.title} key={iterLogo.id}/>}
         </div>
     )
 }
