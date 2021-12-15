@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-function getChars(logoName) {
+// fake data generator
+
+const getChars = (logoName) => {
     var chars = [];
     [...logoName].forEach((element, index) => {
         chars.push({ 'id': `char-${index}`, 'content': element })
@@ -11,7 +13,6 @@ function getChars(logoName) {
     return chars
 }
 
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -20,93 +21,117 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
+/**
+ * Moves an item from one list to another list.
+ */
+const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
+    userSelect: "none",
     padding: grid * 2,
-    margin: `0 ${grid}px 0 0`,
+    margin: `0 ${grid}px ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? 'lightgreen' : 'grey',
+    background: isDragging ? "lightgreen" : "grey",
 
     // styles we need to apply on draggables
-    ...draggableStyle,
+    ...draggableStyle
 });
-
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? 'lightblue' : 'lightgrey',
-    display: 'flex',
+    background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
-    overflow: 'auto',
+    width: 800,
+    display: "flex",
+    flexDirection: "row"
 });
 
+function CharList(props) {
+    const [state, setState] = useState([[], getChars(props.logoName)]);
 
-class CharList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: props.logoName,
-            items: getChars(props.logoName),
-        };
-        this.onDragEnd = this.onDragEnd.bind(this);
-    }
+    function onDragEnd(result) {
+        const { source, destination } = result;
 
-    onDragEnd(result) {
         // dropped outside the list
-        if (!result.destination) {
+        if (!destination) {
             return;
         }
+        const sInd = +source.droppableId;
+        const dInd = +destination.droppableId;
 
-        const items = reorder(
-            this.state.items,
-            result.source.index,
-            result.destination.index
-        );
+        if (sInd === dInd) {
+            const items = reorder(state[sInd], source.index, destination.index);
+            const newState = [...state];
+            newState[sInd] = items;
+            
+            setState(newState);
+        } else {
+            const result = move(state[sInd], state[dInd], source, destination);
+            const newState = [...state];
+            newState[sInd] = result[sInd];
+            newState[dInd] = result[dInd];
 
-        this.setState({
-            items,
-        });
+            setState(newState);
+        }
     }
 
-    // Normally you would want to split things out into separate components.
-    // But in this example everything is just done in one place for simplicity
-    render() {
-        console.log(this.state)
-        return (
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable" direction="horizontal">
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}
-                            {...provided.droppableProps}
-                        >
-                            {this.state.items.map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id} index={index}>
-                                    {(provided, snapshot) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                            style={getItemStyle(
-                                                snapshot.isDragging,
-                                                provided.draggableProps.style
-                                            )}
+    return (
+        <div>
+            <div style={{ display: "flex", flexDirection: "column"}}>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {state.map((el, ind) => (
+                        <Droppable key={ind} droppableId={`${ind}`} direction="horizontal">
+                            {(provided, snapshot) => (
+                                <div
+                                    ref={provided.innerRef}
+                                    style={getListStyle(snapshot.isDraggingOver)}
+                                    {...provided.droppableProps}
+                                >
+                                    {el.map((item, index) => (
+                                        <Draggable
+                                            key={item.id}
+                                            draggableId={item.id}
+                                            index={index}
                                         >
-                                            {item.content}
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-        );
-    }
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    style={getItemStyle(
+                                                        snapshot.isDragging,
+                                                        provided.draggableProps.style
+                                                    )}
+                                                >
+                                                    <div>
+                                                        {item.content}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    ))}
+                </DragDropContext>
+            </div>
+        </div>
+    );
 }
 
 export default CharList;

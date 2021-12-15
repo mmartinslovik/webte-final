@@ -1,6 +1,11 @@
- function Char(props) {
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+ 
+ function Char({char, ref, style}) {
+     console.log(char, style, ref)
      return (
-         <div className="Char">{props.char}</div>
+         <div ref={ref} style={style}>
+             <div>{char}</div>
+        </div>
      )
  }
 
