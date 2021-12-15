@@ -1,13 +1,12 @@
-import './Logo.css';
-
 function Logo(props) {
+    console.log(props)
+    
     return (
-        <img className="image" 
+        <img className="logo_image" 
             key={props.logo.id} 
             src={`./images/${props.logo.src}`} 
             alt={props.logo.title}
-            width="250"
-            heigth="250"></img>
+        ></img>
     )
 }
 

@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 } */
+
+.logo_image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.Char {
+  color: white;
+  background-color: gray;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border: 1px solid #272640;
+}
+
+.CharList {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,6 +1,7 @@
 
 import './App.css';
 import LogoList from './components/LogoList';
+import LogoForm from './components/LogoForm';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
      <div className="container">
        <h1>{appendName('Melman')}</h1>
      </div>
-     <LogoList />
+     <LogoForm />
     </div>
   );
 }

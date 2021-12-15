@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Logo from './Logo';
+import CharList from './CharList';
 
 
-function LogoList() {
+function LogoList(props) {
     const [logos, setLogos] = useState([])
 
     useEffect(() => {
@@ -10,17 +11,14 @@ function LogoList() {
           .then(res => res.json())
           .then(data => setLogos(data));
       }, []);
-
-    // var data = []
-    // const promise = loadData().then(result => {
-    //     result.forEach(element => {
-    //         data.push(element)
-    //     })
-    // })
+    
+    const iterLogo = logos[props.iter]
+    console.log(iterLogo)
 
     return (
         <div>
-            {logos && (logos.map(logo => <Logo logo={logo} />))}
+            {iterLogo && (<Logo logo={iterLogo} />)}
+            {iterLogo && <CharList logoName={iterLogo.title} />}
         </div>
     )
 }
