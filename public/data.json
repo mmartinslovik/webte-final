@@ -6,7 +6,37 @@
     },
     {
         "id": 2,
+        "title": "LouisVuitton",
+        "src": "lv_logo.png"
+    },
+    {
+        "id": 3,
         "title": "Tesla",
         "src": "tesla_logo.png"
+    },
+    {
+        "id": 4,
+        "title": "Apple",
+        "src": "apple_logo.png"
+    },
+    {
+        "id": 5,
+        "title": "Ethereum",
+        "src": "eth_logo.png"
+    },
+    {
+        "id": 6,
+        "title": "Chanel",
+        "src": "chanel_logo.png"
+    },
+    {
+        "id": 7,
+        "title": "MercedesBenz",
+        "src": "mercedes_logo.png"
+    },
+    {
+        "id": 8,
+        "title": "iRobot",
+        "src": "irobot_logo.png"
     }
 ]

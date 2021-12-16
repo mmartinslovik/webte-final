@@ -1,16 +1,36 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import LogoForm from './LogoForm';
 
 // fake data generator
+
+const generateRandomChar = (charsLen) => {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    return { 
+        'id': `char-${charsLen}`, 'content': characters.charAt(Math.floor(Math.random() * characters.length)) 
+    }
+}
+
+const shuffle = (strArr) => {
+    strArr.sort(function () {
+        return 0.5 - Math.random()
+    })
+    return strArr;
+}
 
 const getChars = (logoName) => {
     var chars = [];
     [...logoName].forEach((element, index) => {
         chars.push({ 'id': `char-${index}`, 'content': element })
     })
-    console.log(chars)
-    return chars
+    
+    for(let i = 0; i < 4; i++) {
+        chars.push(generateRandomChar(chars.length))
+    }
+    // console.log(chars)
+    return shuffle(chars);
 }
 
 const reorder = (list, startIndex, endIndex) => {
@@ -88,6 +108,19 @@ function CharList(props) {
         }
     }
 
+    const validateSolution = () => {
+        var sol = ''
+        var solArr = state[0];
+        solArr.forEach(ele => {
+            sol += ele.content;
+        })
+
+        if(sol == props.logoName) {
+            return true
+        }
+        return false
+    }
+
     return (
         <div>
             <div style={{ display: "flex", flexDirection: "column"}}>
@@ -130,6 +163,7 @@ function CharList(props) {
                     ))}
                 </DragDropContext>
             </div>
+            <button type="button" onClick={() => props.sendDataToParent(validateSolution())}>send</button>
         </div>
     );
 }
