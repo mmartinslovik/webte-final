@@ -25,8 +25,6 @@ function LogoList(props) {
         increaseIter()
     }, [])
 
-    console.log(iter)
-
     return (
         <div>
             {iterLogo && (<Logo logo={iterLogo} />)}

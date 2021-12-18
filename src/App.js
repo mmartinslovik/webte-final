@@ -1,6 +1,6 @@
 
 import './App.css';
-import LogoList from './components/LogoList';
+// import LogoList from './components/LogoList';
 import LogoForm from './components/LogoForm';
 
 

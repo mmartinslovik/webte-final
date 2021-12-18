@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import LogoList from './LogoList';
 import CharList from './CharList';
 
-const LOGOS = 8
+const LOGOS = 10
 
 const initOrder = () => {
     var order = []
@@ -13,11 +13,27 @@ const initOrder = () => {
     return order
 }
 
+function checkStorage() {
+    var storedContent = localStorage.getItem("logosOrder")
+    console.log(storedContent)
+    if (!!storedContent) {
+        return storedContent.split(",").map(Number);
+    }
+    return initOrder();
+}
+
+var storedOrder = checkStorage()
 
 function LogoForm() {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("SUBMITTED")
+    }
+
+    const [order, setOrder] = useState(storedOrder)
+
+    const removeLogo = (index) => {
+        setOrder(order.filter(value => {return value != index}))
     }
 
     const [iter, setIter] = useState(0)
@@ -36,9 +52,9 @@ function LogoForm() {
         console.log("solution", bool)
         setSolution(bool)
         if (bool) {
-            removeLogo(iter)
-            increaseIter()
             increasescore()
+            removeLogo(order[iter])
+            // increaseIndex()
         }
     };
 
@@ -48,12 +64,21 @@ function LogoForm() {
         setScore(score + 100)
     }
 
-    const [order, setOrder] = useState(initOrder())
+    const [index, setIndex] = useState(order[0])
 
-    const removeLogo = (index) => {
-        setOrder(order.splice(index, 1))
-        console.log("order", order)
+    const increaseIndex = () => {
+        increaseIter()
+        setIndex(order[iter])
     }
+
+    const decreaseIndex = () => {
+        decreaseIter()
+        setIndex(order[iter])
+    }
+
+    console.log("order", order)
+    localStorage.setItem("logosOrder", order);
+    console.log("iter", iter)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -61,10 +86,10 @@ function LogoForm() {
                 {score}
             </div>
             <div>
-                {<LogoList iter={iter} sendDataToParent={sendDataToParent} />}
+                {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
             </div>
-            {iter > 0 && <button type="submit" onClick={() => decreaseIter()}>prev</button>}
-            {iter < order.length && <button type="submit" onClick={() => increaseIter()}>next</button>}
+            {iter > 0 && <button type="submit" onClick={() => decreaseIndex()}>prev</button>}
+            {iter < (order.length - 1) && <button type="submit" onClick={() => increaseIndex()}>next</button>}
         </form>
     )
 }

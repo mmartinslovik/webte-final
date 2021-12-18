@@ -74,9 +74,14 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
-    width: 800,
+    minWidth: "fit-content",
+    width: `${80}%`,
+    height: 50,
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    // justifyContent: "center",
+    marginLeft: "auto",
+    marginRight: "auto"
 });
 
 function CharList(props) {
@@ -149,7 +154,14 @@ function CharList(props) {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
-                                                    <div>
+                                                    <div
+                                                      style={{
+                                                        display: "flex",
+                                                        justifyContent: "space-around",
+                                                        // width: 25,
+                                                        // height: 55
+                                                      }}
+                                                    >
                                                         {item.content}
                                                     </div>
                                                 </div>

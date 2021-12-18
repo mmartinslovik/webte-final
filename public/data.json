@@ -38,5 +38,15 @@
         "id": 8,
         "title": "iRobot",
         "src": "irobot_logo.png"
+    },
+    {
+        "id": 9,
+        "title": "MSTeams",
+        "src": "mst_logo.png"
+    },
+    {
+        "id": 10,
+        "title": "Matlab",
+        "src": "matlab_logo.png"
     }
 ]
