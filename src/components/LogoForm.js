@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import LogoList from './LogoList';
 import CharList from './CharList';
+import Score from './Score';
 
 const LOGOS = 10
 
@@ -10,7 +11,13 @@ const initOrder = () => {
         order.push(i)
     }
 
-    return order
+    return shuffleOrder(order)
+}
+
+const shuffleOrder = (arr) => {
+    arr.sort(() => Math.random() - 0.5);
+    
+    return arr
 }
 
 function checkStorage() {
@@ -82,14 +89,20 @@ function LogoForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-                {score}
-            </div>
+            <Score score={score} />
             <div>
                 {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
             </div>
-            {iter > 0 && <button type="submit" onClick={() => decreaseIndex()}>prev</button>}
-            {iter < (order.length - 1) && <button type="submit" onClick={() => increaseIndex()}>next</button>}
+            <div className="container">
+                <div className="row align-items-start">
+                    <div className="col">
+                        {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                    </div>
+                    <div className="col" id="score">
+                        {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>} 
+                    </div>
+                </div>
+            </div>
         </form>
     )
 }

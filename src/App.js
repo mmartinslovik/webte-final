@@ -8,10 +8,13 @@ function App() {
 
   return (
     <div className="App">
-     <div className="container">
+      <div id="navbar">
        <h1>logo quiz</h1>
      </div>
      <LogoForm />
+     <footer>
+      <p>&copy; Author: Martin Slovík</p>
+    </footer>
     </div>
   );
 }

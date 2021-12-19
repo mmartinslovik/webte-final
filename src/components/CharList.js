@@ -64,6 +64,9 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
     padding: grid * 2,
     margin: `0 ${grid}px ${grid}px 0`,
+    width: 50,
+    height: 50,
+    borderRadius: `${5}%`,
 
     // change background colour if dragging
     background: isDragging ? "lightgreen" : "grey",
@@ -74,10 +77,12 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
-    minWidth: "fit-content",
+    border: '1px solid grey',
+    flexWrap: "wrap",
+    // minWidth: "fit-content",
     width: `${80}%`,
-    height: 50,
-    display: "flex",
+    minHeight: 70,
+    display: "inline-flex",
     flexDirection: "row",
     // justifyContent: "center",
     marginLeft: "auto",
@@ -127,8 +132,8 @@ function CharList(props) {
     }
 
     return (
-        <div>
-            <div style={{ display: "flex", flexDirection: "column"}}>
+        <div className="container">
+            <div style={{ display: "flex", flexDirection: "column", margin: `${1}%`}}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
                         <Droppable key={ind} droppableId={`${ind}`} direction="horizontal">
@@ -158,8 +163,6 @@ function CharList(props) {
                                                       style={{
                                                         display: "flex",
                                                         justifyContent: "space-around",
-                                                        // width: 25,
-                                                        // height: 55
                                                       }}
                                                     >
                                                         {item.content}
@@ -175,7 +178,7 @@ function CharList(props) {
                     ))}
                 </DragDropContext>
             </div>
-            <button type="button" onClick={() => props.sendDataToParent(validateSolution())}>send</button>
+            <button type="button" className="btn btn-dark" onClick={() => props.sendDataToParent(validateSolution())}>answer</button>
         </div>
     );
 }
