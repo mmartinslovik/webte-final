@@ -73,13 +73,13 @@
   justify-content: space-between;
 }
 
-footer {
+/* footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   padding-top: 1%;
-}
+} */
 
 .menu {
   margin-bottom: 1%;
