@@ -65,6 +65,7 @@
   color: white;
   width: 100%;
   padding: 1%;
+  margin-bottom: 1%;
 }
 
 #iter_buttons {
@@ -78,4 +79,8 @@ footer {
   bottom: 0;
   width: 100%;
   padding-top: 1%;
+}
+
+.menu {
+  margin-bottom: 1%;
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import LogoForm from './LogoForm';
+import Char from "./Char";
 
 // fake data generator
 
@@ -29,7 +30,7 @@ const getChars = (logoName) => {
     for(let i = 0; i < 4; i++) {
         chars.push(generateRandomChar(chars.length))
     }
-    // console.log(chars)
+    console.log(chars)
     return shuffle(chars);
 }
 
@@ -131,6 +132,11 @@ function CharList(props) {
         return false
     }
 
+    const[solution, setSolution] = useState(false)
+    const makeSolution = () => {
+        setSolution(true)
+    }
+
     return (
         <div className="container">
             <div style={{ display: "flex", flexDirection: "column", margin: `${1}%`}}>
@@ -159,14 +165,7 @@ function CharList(props) {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
-                                                    <div
-                                                      style={{
-                                                        display: "flex",
-                                                        justifyContent: "space-around",
-                                                      }}
-                                                    >
-                                                        {item.content}
-                                                    </div>
+                                                   <Char content={item.content} />
                                                 </div>
                                             )}
                                         </Draggable>
@@ -178,7 +177,19 @@ function CharList(props) {
                     ))}
                 </DragDropContext>
             </div>
-            <button type="button" className="btn btn-dark" onClick={() => props.sendDataToParent(validateSolution())}>answer</button>
+            <div className="container">
+                <div className="menu">
+                    {
+                        solution && <div>{props.logoName}</div>
+                    }
+                </div>
+                <div className="menu">
+                    <button type="button" className="btn btn-dark" onClick={() => props.sendDataToParent(validateSolution())}>answer</button>
+                </div>
+                <div className="menu">
+                    <button type="button" className="btn btn-dark" onClick={() => makeSolution()}>solution</button>
+                </div>
+            </div>
         </div>
     );
 }

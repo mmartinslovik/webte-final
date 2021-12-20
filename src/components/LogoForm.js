@@ -29,7 +29,15 @@ function checkStorage() {
     return initOrder();
 }
 
+function checkScore() {
+    if(!!localStorage.getItem("score")) {
+        return Number(localStorage.getItem("score"))
+    }
+    return 0
+}
+
 var storedOrder = checkStorage()
+var storedScore = checkScore()
 
 function LogoForm() {
     const handleSubmit = (e) => {
@@ -38,6 +46,7 @@ function LogoForm() {
     }
 
     const [order, setOrder] = useState(storedOrder)
+    const orderLenght = order.length;
 
     const removeLogo = (index) => {
         setOrder(order.filter(value => {return value != index}))
@@ -55,17 +64,21 @@ function LogoForm() {
 
     const [solution, setSolution] = useState(0)
 
-    const sendDataToParent = (bool) => { // the callback. Use a better name
-        console.log("solution", bool)
-        setSolution(bool)
-        if (bool) {
+    const sendDataToParent = (userSolution) => { 
+        console.log("solution", userSolution)
+        setSolution(userSolution)
+        if (userSolution) {
             increasescore()
-            removeLogo(order[iter])
-            // increaseIndex()
+            if(order[iter + 1] < order.length) {   
+                removeLogo(order[iter])
+            } else {
+                removeLogo(order[iter])
+                decreaseIndex()
+            }
         }
     };
 
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(storedScore)
 
     const increasescore = () => {
         setScore(score + 100)
@@ -85,23 +98,33 @@ function LogoForm() {
 
     console.log("order", order)
     localStorage.setItem("logosOrder", order);
+    localStorage.setItem("score", score)
     console.log("iter", iter)
 
     return (
         <form onSubmit={handleSubmit}>
             <Score score={score} />
             <div>
-                {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
-            </div>
-            <div className="container">
-                <div className="row align-items-start">
-                    <div className="col">
-                        {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                {order.length
+                ?   <div>
+                        <div>
+                            {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
+                        </div>
+                        <div className="container">
+                            <div className="row align-items-start">
+                                <div className="col">
+                                    {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                                </div>
+                                <div className="col" id="score">
+                                    {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>} 
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col" id="score">
-                        {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>} 
+                :   <div>
+                        congratulations
                     </div>
-                </div>
+                }
             </div>
         </form>
     )
