@@ -38,8 +38,8 @@
 } */
 
 .logo_image {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   margin: 1%;
 }
@@ -83,4 +83,26 @@
 
 .menu {
   margin-bottom: 1%;
+}
+
+#section-to-print {
+  visibility: hidden;
+  height: 0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #navbar * {
+    visibility: visible;
+  }
+
+  #section-to-print * {
+    visibility: visible;
+    text-align: left;
+  }
+
+  @page { size: auto;  margin: 0mm; }
 }

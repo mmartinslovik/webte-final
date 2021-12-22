@@ -65,8 +65,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
     padding: grid * 2,
     margin: `0 ${grid}px ${grid}px 0`,
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: `${5}%`,
 
     // change background colour if dragging
@@ -82,7 +82,7 @@ const getListStyle = isDraggingOver => ({
     flexWrap: "wrap",
     // minWidth: "fit-content",
     width: `${80}%`,
-    minHeight: 70,
+    minHeight: 50,
     display: "inline-flex",
     flexDirection: "row",
     // justifyContent: "center",
