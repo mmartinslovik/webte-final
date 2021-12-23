@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import LogoList from './LogoList';
 import CharList from './CharList';
 import Score from './Score';
+import ChangeButtons from './ChangeButtons';
+import Instructions from "./Instructions";
 
 const LOGOS = 10
 
 const initOrder = () => {
     var order = []
-    for(let i = 0; i < LOGOS; i++) {
+    for (let i = 0; i < LOGOS; i++) {
         order.push(i)
     }
 
@@ -16,7 +18,7 @@ const initOrder = () => {
 
 const shuffleOrder = (arr) => {
     arr.sort(() => Math.random() - 0.5);
-    
+
     return arr
 }
 
@@ -30,7 +32,7 @@ function checkStorage() {
 }
 
 function checkScore() {
-    if(!!localStorage.getItem("score")) {
+    if (!!localStorage.getItem("score")) {
         return Number(localStorage.getItem("score"))
     }
     return 0
@@ -46,10 +48,9 @@ function LogoForm() {
     }
 
     const [order, setOrder] = useState(storedOrder)
-    const orderLenght = order.length;
 
     const removeLogo = (index) => {
-        setOrder(order.filter(value => {return value != index}))
+        setOrder(order.filter(value => { return value != index }))
     }
 
     const [iter, setIter] = useState(0)
@@ -64,17 +65,18 @@ function LogoForm() {
 
     const [solution, setSolution] = useState(0)
 
-    const sendDataToParent = (userSolution) => { 
+    const sendDataToParent = (userSolution) => {
         console.log("solution", userSolution)
         setSolution(userSolution)
         if (userSolution) {
             increasescore()
-            if(order[iter + 1] < order.length) {   
+            if (order.indexOf(order[iter + 1]) > -1) {
                 removeLogo(order[iter])
             } else {
                 removeLogo(order[iter])
                 decreaseIndex()
             }
+            setLocalStorage();
         }
     };
 
@@ -96,37 +98,61 @@ function LogoForm() {
         setIndex(order[iter])
     }
 
-    console.log("order", order)
-    localStorage.setItem("logosOrder", order);
-    localStorage.setItem("score", score)
+    const setLocalStorage = () => {
+        console.log("order", order)
+
+    }
+
+    useEffect(() => {
+        localStorage.setItem("logosOrder", order)
+    }, order);
+
     console.log("iter", iter)
 
+    const [value, setValue] = useState(0)
+    const sendValueToRender = (val) => {
+        setValue(val)
+    }
+
+    console.log("value", value)
+
     return (
-        <form onSubmit={handleSubmit}>
-            <Score score={score} />
+        <div>
+            <div id="navbar">
+                <h1>logo quiz</h1>
+            </div>
+                <ChangeButtons sendValueToRender={sendValueToRender} />
             <div>
-                {order.length
-                ?   <div>
-                        <div>
-                            {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
-                        </div>
-                        <div className="container">
-                            <div className="row align-items-start">
-                                <div className="col">
-                                    {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                {value ? <form onSubmit={handleSubmit}>
+                    <Score score={score} />
+                    <div>
+                        {order.length
+                            ? <div>
+                                <div>
+                                    {<LogoList iter={order[iter]} sendDataToParent={sendDataToParent} />}
                                 </div>
-                                <div className="col" id="score">
-                                    {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>} 
+                                <div className="container">
+                                    <div className="row align-items-start">
+                                        <div className="col">
+                                            {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                                        </div>
+                                        <div className="col" id="score">
+                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            : <div>
+                                congratulations
+                            </div>
+                        }
                     </div>
-                :   <div>
-                        congratulations
-                    </div>
+                </form>
+                    : <Instructions />
                 }
             </div>
-        </form>
+        </div>
+
     )
 }
 

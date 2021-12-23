@@ -4,7 +4,6 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import LogoForm from './LogoForm';
 import Char from "./Char";
 
-// fake data generator
 
 const generateRandomChar = (charsLen) => {
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -30,7 +29,7 @@ const getChars = (logoName) => {
     for(let i = 0; i < 4; i++) {
         chars.push(generateRandomChar(chars.length))
     }
-    console.log(chars)
+    // console.log(chars)
     return shuffle(chars);
 }
 
@@ -82,7 +81,7 @@ const getListStyle = isDraggingOver => ({
     flexWrap: "wrap",
     // minWidth: "fit-content",
     width: `${80}%`,
-    minHeight: 50,
+    minHeight: 60,
     display: "inline-flex",
     flexDirection: "row",
     // justifyContent: "center",
@@ -132,9 +131,14 @@ function CharList(props) {
         return false
     }
 
-    const[solution, setSolution] = useState(false)
+    const [solution, setSolution] = useState(false)
     const makeSolution = () => {
         setSolution(true)
+    }
+
+    const [hint, setHint] = useState(false)
+    const getHint = () => {
+        setHint(true)
     }
 
     return (
@@ -179,12 +183,14 @@ function CharList(props) {
             </div>
             <div className="container">
                 <div className="menu">
-                    {
-                        solution && <div>{props.logoName}</div>
-                    }
+                    {hint && <div>{props.logoHint}</div>}
+                    {solution && <div>{props.logoName}</div>}
                 </div>
                 <div className="menu">
                     <button type="button" className="btn btn-dark" onClick={() => props.sendDataToParent(validateSolution())}>answer</button>
+                </div>
+                <div className="menu">
+                    <button type="button" className="btn btn-dark" onClick={() => getHint()}>hint</button>
                 </div>
                 <div className="menu">
                     <button type="button" className="btn btn-dark" onClick={() => makeSolution()}>solution</button>

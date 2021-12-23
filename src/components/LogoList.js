@@ -29,7 +29,7 @@ function LogoList(props) {
         <div>
             {iterLogo && (<Logo logo={iterLogo} />)}
             {iterLogo && <CharList logoName={iterLogo.title.toUpperCase()} key={iterLogo.id} 
-                            sendDataToParent={props.sendDataToParent}
+                            sendDataToParent={props.sendDataToParent} logoHint={iterLogo.hint}
                         />}
         </div>
     )

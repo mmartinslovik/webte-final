@@ -2,51 +2,61 @@
     {
         "id": 1,
         "title": "Volkswagen",
-        "src": "vw_logo.png"
+        "src": "vw_logo.png",
+        "hint": "Názov v preklade znamená ľudové vozidlo."
     },
     {
         "id": 2,
         "title": "LouisVuitton",
-        "src": "lv_logo.png"
+        "src": "lv_logo.png",
+        "hint": "Francúzsky koncern podnikajúci v odevnom priemysle."
     },
     {
         "id": 3,
         "title": "Tesla",
-        "src": "tesla_logo.png"
+        "src": "tesla_logo.png",
+        "hint": "Americká automobilka, ktorá sa zaoberá vývojom a výrobou elektromobilov."
     },
     {
         "id": 4,
         "title": "Apple",
-        "src": "apple_logo.png"
+        "src": "apple_logo.png",
+        "hint": "Americká technologická spoločnosť založená v roku 1976 v Silicon Valley."
     },
     {
         "id": 5,
         "title": "Ethereum",
-        "src": "eth_logo.png"
+        "src": "eth_logo.png",
+        "hint": "Kryptomena a open-source platforma založená na decentralizovanej databáze."
     },
     {
         "id": 6,
         "title": "Chanel",
-        "src": "chanel_logo.png"
+        "src": "chanel_logo.png",
+        "hint": "Dámska módna značka."
     },
     {
         "id": 7,
         "title": "MercedesBenz",
-        "src": "mercedes_logo.png"
+        "src": "mercedes_logo.png",
+        "hint": "Automobilka, ktorú v roku 1883 založil Karl Benz."
     },
     {
         "id": 8,
         "title": "iRobot",
-        "src": "irobot_logo.png"
+        "src": "irobot_logo.png",
+        "hint": " K domácim produktom spoločnosti patrí niekoľko typov robotického vysávača Roomba, robotický mop Braava a ďalšie príslušenstvo."
     },
     {
         "id": 9,
         "title": "MSTeams",
-        "src": "mst_logo.png"
+        "src": "mst_logo.png",
+        "hint": "Platforma, ktorá umožňuje textovú komunikáciu, videohovory, dátové úložisko na ukladanie súborov."
     },
     {
         "id": 10,
         "title": "Matlab",
-        "src": "matlab_logo.png"
+        "src": "matlab_logo.png",
+        "hint": "Programovacie prostredie (s vlastným programovacím jazykom) špecializujúci sa na vedeckotechnické numerické výpočty."
     }
 ]
