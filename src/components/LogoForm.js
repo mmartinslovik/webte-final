@@ -120,8 +120,8 @@ function LogoForm() {
         <div>
             <div id="navbar">
                 <h1>logo quiz</h1>
+                <div id="navbar_buttons_div"><ChangeButtons sendValueToRender={sendValueToRender} /></div>
             </div>
-                <ChangeButtons sendValueToRender={sendValueToRender} />
             <div>
                 {value ? <form onSubmit={handleSubmit}>
                     <Score score={score} />
@@ -134,10 +134,10 @@ function LogoForm() {
                                 <div className="container">
                                     <div className="row align-items-start">
                                         <div className="col">
-                                            {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>previous</button>}
+                                            {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>Predchádzajúce</button>}
                                         </div>
-                                        <div className="col" id="score">
-                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>next</button>}
+                                        <div className="col">
+                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>Dalšie</button>}
                                         </div>
                                     </div>
                                 </div>

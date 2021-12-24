@@ -17,7 +17,15 @@ const shuffle = (strArr) => {
     strArr.sort(function () {
         return 0.5 - Math.random()
     })
-    return strArr;
+    return strArr
+}
+
+const getRandomChars = (len) => {
+    var chars = []
+    for(let i = 0; i < 4; i++) {
+        chars.push(generateRandomChar(len++))
+    }
+    return chars
 }
 
 const getChars = (logoName) => {
@@ -26,12 +34,17 @@ const getChars = (logoName) => {
         chars.push({ 'id': `char-${index}`, 'content': element })
     })
     
-    for(let i = 0; i < 4; i++) {
-        chars.push(generateRandomChar(chars.length))
-    }
     // console.log(chars)
-    return shuffle(chars);
+    return chars;
 }
+
+const initChars = (logoName) =>{
+    var chars = getChars(logoName)
+    var randomChars = getRandomChars(logoName.length)
+    console.log(chars)
+    return shuffle([...chars, ...randomChars])
+}
+
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -69,15 +82,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     borderRadius: `${5}%`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
+    background: isDragging ? "#F8961E" : "#4D908E",
 
     // styles we need to apply on draggables
     ...draggableStyle
 });
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
+    background: isDraggingOver ? "#F9C74F" : "lightgray",
     padding: grid,
-    border: '1px solid grey',
+    // border: '1px solid grey',
     flexWrap: "wrap",
     // minWidth: "fit-content",
     width: `${80}%`,
@@ -86,11 +99,13 @@ const getListStyle = isDraggingOver => ({
     flexDirection: "row",
     // justifyContent: "center",
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
+    marginTop: `${1}%`,
 });
 
 function CharList(props) {
-    const [state, setState] = useState([[], getChars(props.logoName)]);
+    const [state, setState] = useState([[], initChars(props.logoName)]);
+    console.log("state", state)
 
     function onDragEnd(result) {
         const { source, destination } = result;
@@ -134,6 +149,7 @@ function CharList(props) {
     const [solution, setSolution] = useState(false)
     const makeSolution = () => {
         setSolution(true)
+        setState([getChars(props.logoName), getRandomChars(props.logoName.length)])
     }
 
     const [hint, setHint] = useState(false)
@@ -187,13 +203,13 @@ function CharList(props) {
                     {solution && <div>{props.logoName}</div>}
                 </div>
                 <div className="menu">
-                    <button type="button" className="btn btn-dark" onClick={() => props.sendDataToParent(validateSolution())}>answer</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => props.sendDataToParent(validateSolution())}>Odpovedaj</button>
                 </div>
                 <div className="menu">
-                    <button type="button" className="btn btn-dark" onClick={() => getHint()}>hint</button>
+                    <button type="button" className="btn btn-outline-warning" onClick={() => getHint()}>Nápoveda</button>
                 </div>
                 <div className="menu">
-                    <button type="button" className="btn btn-dark" onClick={() => makeSolution()}>solution</button>
+                    <button type="button" className="btn btn-outline-info" onClick={() => makeSolution()}>Riešenie</button>
                 </div>
             </div>
         </div>

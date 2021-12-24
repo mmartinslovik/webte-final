@@ -10,8 +10,8 @@ function ChangeButtons({sendValueToRender}) {
   
     return (
       <div>
-         <button type="button" className="btn btn-dark" onClick={() => handleChange(0)}>napoveda</button>
-         <button type="button" className="btn btn-dark" onClick={() => handleChange(1)}>hra</button>
+         <button type="button" className="navbar_buttons" onClick={() => handleChange(0)}>Popis hry</button>
+         <button type="button" className="navbar_buttons" onClick={() => handleChange(1)}>Hra</button>
       </div>
     );
   }

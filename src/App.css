@@ -61,7 +61,7 @@
 
 #navbar {
   text-align: left;
-  background-color: darkgray;
+  background-color: #277da1;
   color: white;
   width: 100%;
   padding: 1%;
@@ -73,13 +73,13 @@
   justify-content: space-between;
 }
 
-/* footer {
+footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   padding-top: 1%;
-} */
+}
 
 .menu {
   margin-bottom: 1%;
@@ -106,3 +106,47 @@
 
   @page { size: auto;  margin: 0mm; }
 }
+
+#navbar_buttons_div {
+  display: flex;
+  justify-content: left;
+}
+
+.navbar_buttons {
+  background-color: #277da1; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.navbar_buttons:hover {
+  background-color: #4D908E; 
+  color: white;
+}
+
+#instructions_container {
+  text-align: left;
+  width: 50%;
+  margin-top: 2%;
+  background-color: #F9C74F;
+  padding: 2%;
+}
+
+#score {
+  background-color: white;
+  color: rgb(122, 122, 122);
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: fit-content;
+  border-radius: 5%;
+  border: 1px solid #43AA8B;
+}
+

@@ -7,6 +7,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
             display: "flex",
             justifyContent: "space-around",
             marginTop: `${-5}px`,
+            fontWeight: "bold"
             }}
         >
             {content}

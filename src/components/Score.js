@@ -37,14 +37,13 @@ function Score({ score }) {
                         delay={{ show: 250, hide: 400 }}
                         overlay={renderTooltip}
                     >
-                        <Button variant="secondary">instructions</Button>
+                        <Button variant="outline-secondary">Inštrukcie</Button>
                     </OverlayTrigger>
                 </div>
-                <div className="col" id="score">
-                    score : {score}
-                </div>
                 <div className="col">
-
+                    <div id="score">
+                        Skóre: {score}
+                    </div>
                 </div>
             </div>
         </div>
