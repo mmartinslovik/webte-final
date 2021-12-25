@@ -9,27 +9,17 @@ function Score({ score }) {
     const renderTooltip = (message) => (
         <Tooltip id="button-tooltip" {...message}>
             <div>
-                Move characters from the bottom row to the top row. Match the name of the displayed logo.
-                Then hit the answer button in order to submit your solution then your score should increase. 
-                If you are not sure, whether your solution is correct just click next and you can always come back later. If you have no
-                idea what the solution is just click "solution" button. 
+                Po načítaní obrázku loga známej značky je potrebné 
+                pomocou technológie "drag n drop" premiestniť písmená zo spodného obdĺžnika tak, aby 
+                tvorili názov zobrazeného loga. Keď si budete istí, že vami zadaný názov je správny stlačte 
+                tlačidlo "Odpovedaj". Pokiaľ nebudete vedieť odpovedať môžete sa prekliknúť na ďaľšiu úlohu 
+                a znovu sa vrátiť.
             </div>
         </Tooltip>
     );
 
     return (
         <div className="container">
-            <div className="row" id="section-to-print">
-                <div>
-                    <h2>
-                        Instructions
-                    </h2>
-                    Move characters from the bottom row to the top row. Match the name of the displayed logo.
-                    Then hit the answer button in order to submit your solution then your score should increase. 
-                    If you are not sure, whether your solution is correct just click next and you can always come back later. If you have no
-                    idea what the solution is just click "solution" button. 
-                </div>
-            </div>
             <div className="row">
                 <div className="col">
                     <OverlayTrigger

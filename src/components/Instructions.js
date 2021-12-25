@@ -5,11 +5,22 @@ function Instructions() {
                 <h2>Popis hry</h2>
             </div>
             <div className="row">
-                    Move characters from the bottom row to the top row. Match the name of the displayed logo.
-                    Then hit the answer button in order to submit your solution then your score should increase. 
-                    If you are not sure, whether your solution is correct just click next and you can always come back later. If you have no
-                    idea what the solution is just click "solution" button. 
+                    Ako moje záverečné zadanie z predmetu webové technológie, som sa vytvoril hru 
+                    "Logo Quiz". Logika hry je jednoduchá. Po načítaní obrázku loga známej značky je potrebné 
+                    pomocou technológie "drag n drop" premiestniť písmená zo spodného obdĺžnika tak, aby 
+                    tvorili názov zobrazeného loga. Keď si budete istí, že vami zadaný názov je správny stlačte 
+                    tlačidlo "Odpovedaj". Pokiaľ nebudete vedieť odpovedať môžete sa prekliknúť na ďaľšiu úlohu 
+                    a znovu sa vrátiť. Ponúkané sú taktiež možnosti "Nápoveda" a "Riešenie". Po správnom vyriešení 
+                    danej úlohu sa pripočíta skóre a program Vám ponúkne ďalšiu, ak sa tam ešte nejaká nezodpovedaná úloha nachádza.
             </div>
+            <div className="row">
+                    Hra je vytvorená pomocou knižnice "React.js" s pomocou knižnice "react-bootstrap" a "Bootstrap". 
+                    Dáta na generovanie v náhodnom poradí sa nachádzajú v súbore "data.json". Generujú sa obrázky 
+                    prezaté z google.
+                    Na vytvorenie technológie "drag n drop" boli použité komponenty z knižnice 
+                    "react-beautiful-dnd". 
+            </div>
+            
         </div>
     )
 }

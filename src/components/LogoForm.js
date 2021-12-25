@@ -4,6 +4,8 @@ import CharList from './CharList';
 import Score from './Score';
 import ChangeButtons from './ChangeButtons';
 import Instructions from "./Instructions";
+import { ProgressBar } from "react-bootstrap";
+import Success from "./Success";
 
 const LOGOS = 10
 
@@ -63,7 +65,7 @@ function LogoForm() {
         setIter(iter - 1)
     }
 
-    const [solution, setSolution] = useState(0)
+    const [solution, setSolution] = useState(1)
 
     const sendDataToParent = (userSolution) => {
         console.log("solution", userSolution)
@@ -107,6 +109,10 @@ function LogoForm() {
         localStorage.setItem("logosOrder", order)
     }, order);
 
+    useEffect(() => {
+        localStorage.setItem("score", score)
+    }, score);
+
     console.log("iter", iter)
 
     const [value, setValue] = useState(0)
@@ -125,6 +131,7 @@ function LogoForm() {
             <div>
                 {value ? <form onSubmit={handleSubmit}>
                     <Score score={score} />
+                    {!solution && <div>Nesprávne</div>}
                     <div>
                         {order.length
                             ? <div>
@@ -134,16 +141,16 @@ function LogoForm() {
                                 <div className="container">
                                     <div className="row align-items-start">
                                         <div className="col">
-                                            {iter > 0 && <button type="submit" className="btn btn-dark" onClick={() => decreaseIndex()}>Predchádzajúce</button>}
+                                            {iter > 0 && <button type="submit" className="btn btn-outline-dark" onClick={() => decreaseIndex()}>Predchádzajúce</button>}
                                         </div>
                                         <div className="col">
-                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-dark" onClick={() => increaseIndex()}>Dalšie</button>}
+                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-outline-dark" onClick={() => increaseIndex()}>Dalšie</button>}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             : <div>
-                                congratulations
+                                <Success />
                             </div>
                         }
                     </div>

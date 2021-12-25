@@ -74,15 +74,13 @@
 }
 
 footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  margin-top: 3%;
   width: 100%;
   padding-top: 1%;
 }
 
 .menu {
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
 
 #section-to-print {
@@ -95,13 +93,12 @@ footer {
     visibility: hidden;
   }
 
-  #navbar * {
+  #navbar, h1 {
     visibility: visible;
   }
 
-  #section-to-print * {
+  #instructions_container * {
     visibility: visible;
-    text-align: left;
   }
 
   @page { size: auto;  margin: 0mm; }
@@ -131,11 +128,11 @@ footer {
 }
 
 #instructions_container {
+  width: 90%;
   text-align: left;
-  width: 50%;
   margin-top: 2%;
   background-color: #F9C74F;
-  padding: 2%;
+  padding: 5%;
 }
 
 #score {
@@ -150,3 +147,16 @@ footer {
   border: 1px solid #43AA8B;
 }
 
+#success_container{
+  width: 90%;
+  text-align: left;
+  margin-top: 2%;
+  background-color: #F9C74F;
+  padding: 2%;
+}
+
+@media (min-width: 576px) {
+  #success_container, #instructions_container {
+      width: 50%;
+  }
+}

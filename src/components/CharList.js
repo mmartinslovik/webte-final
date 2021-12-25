@@ -94,7 +94,7 @@ const getListStyle = isDraggingOver => ({
     flexWrap: "wrap",
     // minWidth: "fit-content",
     width: `${80}%`,
-    minHeight: 60,
+    minHeight: 65,
     display: "inline-flex",
     flexDirection: "row",
     // justifyContent: "center",
