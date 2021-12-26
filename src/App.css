@@ -79,8 +79,12 @@ footer {
   padding-top: 1%;
 }
 
-.menu {
-  margin-bottom: 2%;
+#menu {
+  margin: 3%;
+}
+
+#score_container {
+  margin-bottom: 1%;
 }
 
 #section-to-print {
@@ -149,7 +153,7 @@ footer {
 
 #success_container{
   width: 90%;
-  text-align: left;
+  text-align: center;
   margin-top: 2%;
   background-color: #F9C74F;
   padding: 2%;

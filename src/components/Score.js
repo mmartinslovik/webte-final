@@ -19,7 +19,7 @@ function Score({ score }) {
     );
 
     return (
-        <div className="container">
+        <div className="container" id="score_container">
             <div className="row">
                 <div className="col">
                     <OverlayTrigger

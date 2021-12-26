@@ -144,7 +144,7 @@ function LogoForm() {
                                             {iter > 0 && <button type="submit" className="btn btn-outline-dark" onClick={() => decreaseIndex()}>Predchádzajúce</button>}
                                         </div>
                                         <div className="col">
-                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-outline-dark" onClick={() => increaseIndex()}>Dalšie</button>}
+                                            {iter < (order.length - 1) && <button type="submit" className="btn btn-outline-dark" onClick={() => increaseIndex()}>Ďalšie</button>}
                                         </div>
                                     </div>
                                 </div>

@@ -8,8 +8,8 @@ import Char from "./Char";
 const generateRandomChar = (charsLen) => {
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-    return { 
-        'id': `char-${charsLen}`, 'content': characters.charAt(Math.floor(Math.random() * characters.length)) 
+    return {
+        'id': `char-${charsLen}`, 'content': characters.charAt(Math.floor(Math.random() * characters.length))
     }
 }
 
@@ -22,7 +22,7 @@ const shuffle = (strArr) => {
 
 const getRandomChars = (len) => {
     var chars = []
-    for(let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         chars.push(generateRandomChar(len++))
     }
     return chars
@@ -33,12 +33,12 @@ const getChars = (logoName) => {
     [...logoName].forEach((element, index) => {
         chars.push({ 'id': `char-${index}`, 'content': element })
     })
-    
+
     // console.log(chars)
     return chars;
 }
 
-const initChars = (logoName) =>{
+const initChars = (logoName) => {
     var chars = getChars(logoName)
     var randomChars = getRandomChars(logoName.length)
     console.log(chars)
@@ -121,7 +121,7 @@ function CharList(props) {
             const items = reorder(state[sInd], source.index, destination.index);
             const newState = [...state];
             newState[sInd] = items;
-            
+
             setState(newState);
         } else {
             const result = move(state[sInd], state[dInd], source, destination);
@@ -140,7 +140,7 @@ function CharList(props) {
             sol += ele.content;
         })
 
-        if(sol == props.logoName) {
+        if (sol == props.logoName) {
             return true
         }
         return false
@@ -159,7 +159,7 @@ function CharList(props) {
 
     return (
         <div className="container">
-            <div style={{ display: "flex", flexDirection: "column", margin: `${1}%`}}>
+            <div style={{ display: "flex", flexDirection: "column", margin: `${1}%` }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
                         <Droppable key={ind} droppableId={`${ind}`} direction="horizontal">
@@ -185,7 +185,7 @@ function CharList(props) {
                                                         provided.draggableProps.style
                                                     )}
                                                 >
-                                                   <Char content={item.content} />
+                                                    <Char content={item.content} />
                                                 </div>
                                             )}
                                         </Draggable>
@@ -197,19 +197,21 @@ function CharList(props) {
                     ))}
                 </DragDropContext>
             </div>
-            <div className="container">
-                <div className="menu">
+            <div className="container" id="menu">
+                <div className="row">
                     {hint && <div>{props.logoHint}</div>}
                     {solution && <div>{props.logoName}</div>}
-                </div>
-                <div className="menu">
-                    <button type="button" className="btn btn-outline-success" onClick={() => props.sendDataToParent(validateSolution())}>Odpovedaj</button>
-                </div>
-                <div className="menu">
-                    <button type="button" className="btn btn-outline-warning" onClick={() => getHint()}>Nápoveda</button>
-                </div>
-                <div className="menu">
-                    <button type="button" className="btn btn-outline-info" onClick={() => makeSolution()}>Riešenie</button>
+                    <div className="row align-items-start">
+                        <div className="col">
+                            <button type="button" className="btn btn-outline-warning" onClick={() => getHint()}>Nápoveda</button>
+                        </div>
+                        <div className="col">
+                            <button type="button" className="btn btn-outline-success" onClick={() => props.sendDataToParent(validateSolution())}>Odpovedaj</button>
+                        </div>
+                        <div className="col">
+                            <button type="button" className="btn btn-outline-info" onClick={() => makeSolution()}>Riešenie</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
