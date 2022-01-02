@@ -4,6 +4,11 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import Tooltip from 'react-bootstrap/Tooltip'
 
+/*
+    displays current score of the game with addition of a tooltip that gives brief instructions
+    to the player
+*/
+
 function Score({ score }) {
     const message = ['tooltip']
     const renderTooltip = (message) => (

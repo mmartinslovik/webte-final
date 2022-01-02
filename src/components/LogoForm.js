@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import LogoList from './LogoList';
-import CharList from './CharList';
 import Score from './Score';
 import ChangeButtons from './ChangeButtons';
 import Instructions from "./Instructions";
-import { ProgressBar } from "react-bootstrap";
 import Success from "./Success";
 
+// number of logos in data.json 
 const LOGOS = 10
 
 const initOrder = () => {
@@ -18,6 +17,7 @@ const initOrder = () => {
     return shuffleOrder(order)
 }
 
+// creates random order of levels
 const shuffleOrder = (arr) => {
     arr.sort(() => Math.random() - 0.5);
 
@@ -40,10 +40,16 @@ function checkScore() {
     return 0
 }
 
+// order of the displayed logos and score fetched from local storage
 var storedOrder = checkStorage()
 var storedScore = checkScore()
 
+/*
+    main component that contains all other components a forms whole structure of the game
+*/
+
 function LogoForm() {
+
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("SUBMITTED")
@@ -67,6 +73,8 @@ function LogoForm() {
 
     const [solution, setSolution] = useState(1)
 
+    // checks the user solution, if correct adds score, removes logo from the pool
+    // and moves to the next level
     const sendDataToParent = (userSolution) => {
         console.log("solution", userSolution)
         setSolution(userSolution)
@@ -78,7 +86,6 @@ function LogoForm() {
                 removeLogo(order[iter])
                 decreaseIndex()
             }
-            setLocalStorage();
         }
     };
 
@@ -90,21 +97,19 @@ function LogoForm() {
 
     const [index, setIndex] = useState(order[0])
 
+    // move to the next level
     const increaseIndex = () => {
         increaseIter()
         setIndex(order[iter])
     }
 
+    // move to the previous level
     const decreaseIndex = () => {
         decreaseIter()
         setIndex(order[iter])
     }
 
-    const setLocalStorage = () => {
-        console.log("order", order)
-
-    }
-
+    // save logos order and score to the local storage 
     useEffect(() => {
         localStorage.setItem("logosOrder", order)
     }, order);
@@ -113,14 +118,11 @@ function LogoForm() {
         localStorage.setItem("score", score)
     }, score);
 
-    console.log("iter", iter)
-
+    // set value form ChangeButtons.js for conditional rendering 
     const [value, setValue] = useState(0)
     const sendValueToRender = (val) => {
         setValue(val)
     }
-
-    console.log("value", value)
 
     return (
         <div>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+// components needed for drag n drop to function 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import LogoForm from './LogoForm';
 import Char from "./Char";
 
-
+// generates random characters to increase difficulty
 const generateRandomChar = (charsLen) => {
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -13,6 +12,7 @@ const generateRandomChar = (charsLen) => {
     }
 }
 
+// creates random order of the characters
 const shuffle = (strArr) => {
     strArr.sort(function () {
         return 0.5 - Math.random()
@@ -28,16 +28,17 @@ const getRandomChars = (len) => {
     return chars
 }
 
+// transforms logo name into character tiles data
 const getChars = (logoName) => {
     var chars = [];
     [...logoName].forEach((element, index) => {
         chars.push({ 'id': `char-${index}`, 'content': element })
     })
 
-    // console.log(chars)
     return chars;
 }
 
+// initializes the state of CharList.js component
 const initChars = (logoName) => {
     var chars = getChars(logoName)
     var randomChars = getRandomChars(logoName.length)
@@ -45,94 +46,101 @@ const initChars = (logoName) => {
     return shuffle([...chars, ...randomChars])
 }
 
-
-const reorder = (list, startIndex, endIndex) => {
+// reorders tiles in the rectangle
+const reorder = (list, startIndex, lastIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    result.splice(lastIndex, 0, removed);
 
     return result;
 };
 
-/**
- * Moves an item from one list to another list.
- */
+
+// moves an item from one list to another list based od react-beautiful-dnd
 const move = (source, destination, droppableSource, droppableDestination) => {
     const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
+    const destinationClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
 
-    destClone.splice(droppableDestination.index, 0, removed);
+    destinationClone.splice(droppableDestination.index, 0, removed);
 
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
+    result[droppableDestination.droppableId] = destinationClone;
 
     return result;
 };
+
 const grid = 8;
 
+// changes style of the character tiles
 const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
     userSelect: "none",
     padding: grid * 2,
     margin: `0 ${grid}px ${grid}px 0`,
     width: 40,
     height: 40,
     borderRadius: `${5}%`,
-
-    // change background colour if dragging
     background: isDragging ? "#F8961E" : "#4D908E",
 
-    // styles we need to apply on draggables
+    // styles needed to apply on draggables
     ...draggableStyle
 });
+
+// changes style of the rectangles 
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "#F9C74F" : "lightgray",
     padding: grid,
-    // border: '1px solid grey',
     flexWrap: "wrap",
-    // minWidth: "fit-content",
     width: `${80}%`,
     minHeight: 65,
     display: "inline-flex",
     flexDirection: "row",
-    // justifyContent: "center",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: `${1}%`,
 });
 
-function CharList(props) {
-    const [state, setState] = useState([[], initChars(props.logoName)]);
-    console.log("state", state)
+/*
+    creates solution and starting rectangle filled with characters forming a solution with addition of 
+    random characters, onClick displays hint or completes the solution
+*/
 
+function CharList(props) {
+
+    const [state, setState] = useState([[], initChars(props.logoName)]);
+
+    // creates all drag n drop logic, required by the library
     function onDragEnd(result) {
         const { source, destination } = result;
 
-        // dropped outside the list
+        // dropped outside the rectangle
         if (!destination) {
             return;
         }
-        const sInd = +source.droppableId;
-        const dInd = +destination.droppableId;
+        const destInd = +destination.droppableId;
+        const srcInd = +source.droppableId;
 
-        if (sInd === dInd) {
-            const items = reorder(state[sInd], source.index, destination.index);
+        // drag n drop within the rectangle
+        if (srcInd === destInd) {
+            const items = reorder(state[srcInd], source.index, destination.index);
             const newState = [...state];
-            newState[sInd] = items;
+            newState[srcInd] = items;
 
             setState(newState);
-        } else {
-            const result = move(state[sInd], state[dInd], source, destination);
+        } 
+        // drag n drop between starting and solution rectangles
+        else {
+            const result = move(state[srcInd], state[destInd], source, destination);
             const newState = [...state];
-            newState[sInd] = result[sInd];
-            newState[dInd] = result[dInd];
+            newState[srcInd] = result[srcInd];
+            newState[destInd] = result[destInd];
 
             setState(newState);
         }
     }
 
+    // validates user solution, if correct the information is send into LogoForm.js 
     const validateSolution = () => {
         var sol = ''
         var solArr = state[0];
@@ -146,12 +154,14 @@ function CharList(props) {
         return false
     }
 
+    // creates solution and sends data into LogoForm.js
     const [solution, setSolution] = useState(false)
     const makeSolution = () => {
         setSolution(true)
         setState([getChars(props.logoName), getRandomChars(props.logoName.length)])
     }
-
+    
+    // sets hint for conditional rendering
     const [hint, setHint] = useState(false)
     const getHint = () => {
         setHint(true)
@@ -160,6 +170,13 @@ function CharList(props) {
     return (
         <div className="container">
             <div style={{ display: "flex", flexDirection: "column", margin: `${1}%` }}>
+                {/* 
+                    react-beautiful-dnd requires using components:
+                    1) DragDropContext - wraps the part of your application you want to have drag and drop enabled for
+                    2) Droppable - an area that can be dropped into
+                    3) Draggable - what can be dragged around
+                    with its required properties for fully functional application
+                 */}
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
                         <Droppable key={ind} droppableId={`${ind}`} direction="horizontal">

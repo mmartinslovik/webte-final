@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import Logo from './Logo';
 import CharList from './CharList';
 
+/*
+    fetches information from data.json then returns a level of the game
+*/
 
 function LogoList(props) {
     const [logos, setLogos] = useState([])
@@ -29,8 +32,7 @@ function LogoList(props) {
         <div>
             {iterLogo && (<Logo logo={iterLogo} />)}
             {iterLogo && <CharList logoName={iterLogo.title.toUpperCase()} key={iterLogo.id} 
-                            sendDataToParent={props.sendDataToParent} logoHint={iterLogo.hint}
-                        />}
+                            sendDataToParent={props.sendDataToParent} logoHint={iterLogo.hint} />}
         </div>
     )
 }

@@ -1,5 +1,8 @@
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
- 
+/*
+    creates a tile with character content that is used to drag between characters' rectangle 
+    and solution rectangle
+*/
+
  function Char({content}) {
      return (
         <div

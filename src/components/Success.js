@@ -1,3 +1,7 @@
+/*
+    returns a "congratulations" screen after successfully completing the quiz
+*/
+
 function Success() {
     return (
         <div className="container" id="success_container">

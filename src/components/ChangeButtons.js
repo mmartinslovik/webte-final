@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/*
+  child component located in navigational bar that sends its parent component LogoForm.js value to render:
+  0: game description 
+  1: game 
+*/
+
 function ChangeButtons({sendValueToRender}) {
     const [value, setValue] = useState(1);
 
